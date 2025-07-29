@@ -5,7 +5,6 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
-// Helper methods
 function isNumber(val) {
   return !isNaN(val);
 }
@@ -29,19 +28,14 @@ function reverseWithAltCaps(letters) {
   ).join("");
 }
 
-// Identity Info
-// Load environment variables from .env file
+
 require('dotenv').config();
 
-// Identity Info from environment variables
 const NAME = process.env.NAME || "Udayan Sharma";
 const BIRTH_DATE = process.env.BIRTH_DATE || "19052004";
 const EMAIL_ID = process.env.EMAIL_ID || "udayan922.be22@chitkara.edu.in";
 const ROLL_NO = process.env.ROLL_NO || "2210990922";
 
-app.listen(PORT, () => {
-  console.log(`API live on port ${PORT}`);
-});
 
 app.post("/bfhl", (req, res) => {
   try {
@@ -90,6 +84,49 @@ app.post("/bfhl", (req, res) => {
   } catch (error) {
     return res.status(500).json({ is_success: false, error: error.message });
   }
+});
+
+app.get("/", (req, res) => {
+  res.send(`
+    <html>
+      <head>
+        <title>BFHL API</title>
+        <style>
+          body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+          h1 { color: #333; }
+          pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; }
+        </style>
+      </head>
+      <body>
+        <h1>BFHL API Documentation</h1>
+        <p>This API processes arrays of data and categorizes them.</p>
+        
+        <h2>Endpoint: POST /bfhl</h2>
+        <p><strong>Request Format:</strong></p>
+        <pre>
+{
+  "data": ["1", "2", "a", "b", "@"]
+}
+        </pre>
+        
+        <p><strong>Response Format:</strong></p>
+        <pre>
+{
+  "is_success": true,
+  "user_id": "${NAME}_${BIRTH_DATE}",
+  "email": "${EMAIL_ID}",
+  "roll_number": "${ROLL_NO}",
+  "odd_numbers": ["1"],
+  "even_numbers": ["2"],
+  "alphabets": ["A", "B"],
+  "special_characters": ["@"],
+  "sum": "3",
+  "concat_string": "Ba"
+}
+        </pre>
+      </body>
+    </html>
+  `);
 });
 
 app.listen(PORT, () => {
