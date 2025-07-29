@@ -39,6 +39,10 @@ const BIRTH_DATE = process.env.BIRTH_DATE || "19052004";
 const EMAIL_ID = process.env.EMAIL_ID || "udayan922.be22@chitkara.edu.in";
 const ROLL_NO = process.env.ROLL_NO || "2210990922";
 
+app.listen(PORT, () => {
+  console.log(`API live on port ${PORT}`);
+});
+
 app.post("/bfhl", (req, res) => {
   try {
     const { data } = req.body;
